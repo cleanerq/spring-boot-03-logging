@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="SYS_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    	<file>c:/springboot_log/springboot_info.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>c:/springboot_log/springboot_info.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <maxHistory>100</maxHistory>
+		</rollingPolicy>
+
+        <encoder charset="UTF-8">
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}]->[%thread] %-5level %logger{80} [%L] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="SYS_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    	<file>c:/springboot_log/springboot_error.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>c:/springboot_log/springboot_error.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <maxHistory>100</maxHistory>
+        </rollingPolicy>
+
+        <encoder charset="UTF-8">
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}]->[%thread] %-5level %logger{80} [%L] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <springProfile name="dev">
+            <encoder charset="utf-8">
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}]->[%thread] %-5level %logger{80} [%L] - %msg%n</pattern>
+            </encoder>
+        </springProfile>
+        <springProfile name="!dev">
+            <encoder charset="utf-8">
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}]=>[%thread] %-5level %logger{80} [%L] - %msg%n</pattern>
+            </encoder>
+        </springProfile>
+    </appender>
+
+    <logger name="com.caissa.erp.caissauic" level="INFO" additivity="false">    
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="SYS_INFO" />
+        <appender-ref ref="SYS_ERROR" />
+        <appender-ref ref="console"/>
+    </root>
+</configuration>
